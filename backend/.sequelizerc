@@ -1,0 +1,10 @@
+const path = require('path');
+
+  // Configuração do acesso as pastas
+
+module.exports = {
+  'config': path.resolve(__dirname,'build', 'src', 'database','config', 'database.js'),
+  'models-path': path.resolve(__dirname,'build', 'src','database','models'),
+  'seeders-path': path.resolve(__dirname,'build', 'src', 'database', 'seeders'),
+  'migrations-path': path.resolve(__dirname,'build','src','database', 'migrations'),
+};
