@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  backend:
+    build: ./backend
+    user: node
+    container_name: backend
+    command: npm run dev
+    restart: always
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/backend
+    ports:
+      - "3001:3001"
+    environment:
+      DB_USER: root
+      DB_PASSWORD: '123456'
+      DB_HOST: db
+      DB_PORT: 3306
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'
+      MYSQL_DATABASE: backend
+      MYSQL_PASSWORD: '123456'
+    ports:
+      - 3306:3306
