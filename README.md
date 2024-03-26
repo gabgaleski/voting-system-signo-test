@@ -24,3 +24,12 @@ Teste para a vaga de Desenvolvedor
 
 - Docker (Criar containers para isolar as aplicações)
 - EsLint (Manter a formatação e as boas praticas do codigo)
+
+## Para rodar o projeto:
+
+Para rodar siga os comandos em ordem:
+
+- `docker-compose up -d --build` Para criar os containers "Backend" e "db"
+- `docker exec -it backend bash` Para entrar no terminal do container de maneira iterativa
+- `npm run build` Para gerar o build em Javascript
+- `npm run db:start` Para rodar as migrations e seeds, criando as tabelas do banco de dados
