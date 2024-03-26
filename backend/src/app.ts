@@ -1,4 +1,5 @@
 import express from 'express';
+import route from './Routes';
 
 class App {
   public app: express.Express;
@@ -6,6 +7,7 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
+    this.app.use(route);
     this.app.get('/', (_req, res) => res.json({ message: "OK" }))
   }
 

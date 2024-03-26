@@ -6,6 +6,7 @@ import {
   CreationOptional,
 } from 'sequelize';
   import db from '.';
+import OptionsModel from './optionsModel';
 
 class VotingModel extends Model<InferAttributes<VotingModel>,
 InferCreationAttributes<VotingModel>> {
@@ -36,9 +37,14 @@ VotingModel.init({
   }
 }, {
   sequelize: db,
-  modelName: 'voting',
+  modelName: 'votings',
   timestamps: false,
   underscored: true,
+});
+
+VotingModel.hasMany(OptionsModel, {
+  foreignKey: 'votingId',
+  as: 'options'
 });
 
 export default VotingModel;

@@ -2,7 +2,7 @@ import { QueryInterface } from 'sequelize';
 
 export default {
   up: async (queryInterface: QueryInterface) => {
-    await queryInterface.bulkInsert('voting', [
+    await queryInterface.bulkInsert('votings', [
       {
         title: 'Qual sua cor favorita?',
         initial_date: new Date(),
@@ -12,6 +12,6 @@ export default {
   },
 
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.bulkDelete('voting', {});
+    await queryInterface.bulkDelete('votings', {});
   },
 }

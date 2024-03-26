@@ -3,7 +3,7 @@ import { IVoting } from '../../interfaces/IVoting';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<IVoting>>('voting', {
+    return queryInterface.createTable<Model<IVoting>>('votings', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -29,6 +29,6 @@ export default {
   },
   
   down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('voting');
+    return queryInterface.dropTable('votings');
   },
 };

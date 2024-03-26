@@ -6,7 +6,6 @@ import {
   CreationOptional,
 } from 'sequelize';
   import db from '.';
-import VotingModel from './votingModel';
 
 class OptionsModel extends Model<InferAttributes<OptionsModel>,
 InferCreationAttributes<OptionsModel>> {
@@ -42,11 +41,6 @@ OptionsModel.init({
   modelName: 'options',
   timestamps: false,
   underscored: true,
-});
-
-OptionsModel.belongsTo(VotingModel, {
-  foreignKey: 'votingId',
-  as: 'options',
 });
 
 export default OptionsModel;
