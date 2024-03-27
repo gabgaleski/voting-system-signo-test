@@ -44,7 +44,8 @@ VotingModel.init({
 
 VotingModel.hasMany(OptionsModel, {
   foreignKey: 'votingId',
-  as: 'options'
+  as: 'options',
+  onDelete: 'CASCADE',
 });
 
 export default VotingModel;
