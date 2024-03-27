@@ -33,7 +33,7 @@ export default class VotingService implements IVotingCRUD {
 
     options.forEach(async (options: IOptions) => {
       const { value } = options;
-      await OptionsModel.create({ votingId: voting.id, value, votes: 0 }) //Corrigir para iniciar com 0 votos
+      await OptionsModel.create({ votingId: voting.id, value, votes: 0 });
     })
 
     return {message: "SUCCESS"};
