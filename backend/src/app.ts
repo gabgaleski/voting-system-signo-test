@@ -1,14 +1,22 @@
 import express from 'express';
 import route from './Routes';
+import cors from 'cors';
 
 class App {
   public app: express.Express;
 
   constructor() {
     this.app = express();
-    this.app.use(express.json());
+    this.config();
     this.app.use(route);
-    this.app.get('/', (_req, res) => res.json({ message: "OK" }))
+    this.app.get('/', (_req, res) => res.json({ message: "OK" }));
+  }
+
+  private config(): void {
+    this.app.use(express.json());
+    this.app.use(cors({ 
+    origin: '*'
+    }));
   }
 
   public start(port: number): void {
