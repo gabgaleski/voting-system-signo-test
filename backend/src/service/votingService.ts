@@ -40,9 +40,9 @@ export default class VotingService implements IVotingCRUD {
   }
 
   public async vote(id: number, vote: number): Promise<{message: string}> {
-    const newVote = await OptionsModel.update({ votes: vote }, { where: { id } });
+    const [newVote] = await OptionsModel.update({ votes: vote }, { where: { id } });
 
-    if (newVote[0] === 0) {
+    if (newVote === 0) {
       return { message: 'Option not found' };
     }
     return { message: 'Success' };

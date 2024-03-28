@@ -15,6 +15,7 @@ Teste para a vaga de Desenvolvedor
 ## Frontend
 
 - React.js (Biblioteca para front com Javascript ou Typescript)
+- Axios (Realizar as requisições para o backend)
 - HTML
 - CSS
 - Jest
