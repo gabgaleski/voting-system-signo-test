@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import './App.css'
+import './formStyle.css'
+import './listStyle.css'
 import { requestData, requestDelete, requestPost, requestPut } from './API/request';
 import { getDate } from './helper/helperDate';
 
@@ -81,7 +82,6 @@ function App() {
     } catch (error) {
       return console.log(error)
     }
-
   }
 
   const deleteVoting = async (votingId) => {
@@ -92,6 +92,11 @@ function App() {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const deleteOption = (index) => {
+    const newOptions = options.filter((_option, i) => i !== index)
+    setOptions(newOptions)
   }
 
   useEffect(() => {
@@ -141,16 +146,23 @@ function App() {
               value={inputOptions}
             />
             <span className='warning'>Coloque no minimo 3 opções</span>
+            <div className='options-container'>
+              {
+                options.map((option, index) => {
+                  return (
+                    <div key={index} className='options-div'>
+                      <p className='options-text'>{option.value}</p>
+                      <button
+                        className='delete-button'
+                        type='button'
+                        onClick={() => deleteOption(index)}
+                      >X</button>
+                    </div>
+                  )
+                })
+              }
+            </div>
             <button className='add-button' type='button' onClick={createOptions} >Adicionar</button>
-            {
-              options.map((option, index) => {
-                return (
-                  <div key={index}>
-                    <p>{option.value}</p>
-                  </div>
-                )
-              })
-            }
           </div>
           <button
             className='button-create'
@@ -158,40 +170,44 @@ function App() {
             onClick={createVoting}>Criar Votação</button>
         </form>
 
-        <div>
+        <section className='list-container'>
           <h2>Lista de Votações</h2>
-          {
-            votings.map((voting) => {
-              const initialDate = getDate(voting.initialDate)
-              const finalDate = getDate(voting.finalDate)
-              const status = stateVoteing(voting.initialDate, voting.finalDate);
-              return (
-                <div key={voting.id}>
-                  <h3>{voting.title}</h3>
-                  <p>Inicio da votação:</p>
-                  <input type='datetime-local' defaultValue={initialDate} disabled />
-                  <p>Fim da votação:</p>
-                  <input type='datetime-local' defaultValue={finalDate} disabled />
-                  <p>Status: {status}</p>
-                  <button onClick={() => deleteVoting(voting.id)}>Deletar Votação</button>
-                  {voting.options.map((option) => {
-                    const newVote = { votes: option.votes + 1 }; // body esperado no backend
-                    return (
-                      <div key={option.id}>
-                        <h4>{option.value}</h4>
-                        <p>{option.votes}</p>
-                        <button
-                          disabled={status !== 'Em andamento'}
-                          onClick={() => vote(option.id, newVote)}
-                        >Votar</button>
-                      </div>
-                    )
-                  })}
-                </div>
-              )
-            })
-          }
-        </div>
+          <div className='list-all-votings'>
+            {
+              votings.map((voting) => {
+                const initialDate = getDate(voting.initialDate)
+                const finalDate = getDate(voting.finalDate)
+                const status = stateVoteing(voting.initialDate, voting.finalDate);
+                return (
+                  <div key={voting.id} className='voting'>
+                    <h3>{voting.title}</h3>
+                    <div>
+                      <p>Inicio da votação:</p>
+                      <input type='datetime-local' defaultValue={initialDate} disabled />
+                      <p>Fim da votação:</p>
+                      <input type='datetime-local' defaultValue={finalDate} disabled />
+                    </div>
+                    <p>Status: {status}</p>
+                    <button onClick={() => deleteVoting(voting.id)}>Deletar Votação</button>
+                    {voting.options.map((option) => {
+                      const newVote = { votes: option.votes + 1 }; // body esperado no backend
+                      return (
+                        <div key={option.id}>
+                          <h4>{option.value}</h4>
+                          <p>{option.votes}</p>
+                          <button
+                            disabled={status !== 'Em andamento'}
+                            onClick={() => vote(option.id, newVote)}
+                          >Votar</button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })
+            }
+          </div>
+        </section>
       </section>
     </section>
   )
