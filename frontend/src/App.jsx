@@ -3,6 +3,7 @@ import './formStyle.css'
 import './listStyle.css'
 import { requestData, requestDelete, requestPost, requestPut } from './API/request';
 import { getDate } from './helper/helperDate';
+import { errorAlert, successAlert } from './helper/alerts';
 
 function App() {
   const [votings, setVotings] = useState([]);
@@ -44,7 +45,7 @@ function App() {
   }
 
   const createOptions = () => {
-    if (inputOptions === '') return alert('Campo de opção não pode ser vazio');
+    if (inputOptions === '') return errorAlert('Opção de votação não pode ser vazia');
     setOptions((prev) => [...prev, { value: inputOptions }])
     setInputOptions('')
   }
@@ -64,9 +65,9 @@ function App() {
     const isValidDate = initialDateVoting <= finalDateVoting && initialDateVoting >= currentDate;
     console.log(isValidDate)
 
-    if (title.current.value === '') return alert('Título da votação não pode ser vazio');
-    if (!isValidDate) return alert('Data de inicio e fim da votação inválida')
-    if (options.length < 3) return alert('É necessário no mínimo 3 opções para votação');
+    if (title.current.value === '') return errorAlert('Título da votação não pode ser vazio');
+    if (!isValidDate) return errorAlert('Data de inicio e fim da votação inválida')
+    if (options.length < 3) return errorAlert('É necessário no mínimo 3 opções para votação');
 
     const newVoting = {
       title: title.current.value,
@@ -78,7 +79,7 @@ function App() {
     try {
       await requestPost('/voting', newVoting);
       resetInputs();
-      return alert('Votação criada com sucesso');
+      return successAlert('Votação criada com sucesso');
     } catch (error) {
       return console.log(error)
     }
@@ -88,7 +89,7 @@ function App() {
     try {
       await requestDelete(`/voting/${votingId}`);
       getVotings();
-      alert('Votação deletada com sucesso')
+      successAlert('Votação deletada com sucesso');
     } catch (error) {
       console.log(error)
     }
@@ -181,20 +182,27 @@ function App() {
                 return (
                   <div key={voting.id} className='voting'>
                     <h3>{voting.title}</h3>
-                    <div>
-                      <p>Inicio da votação:</p>
-                      <input type='datetime-local' defaultValue={initialDate} disabled />
-                      <p>Fim da votação:</p>
-                      <input type='datetime-local' defaultValue={finalDate} disabled />
+                    <div className='date-container'>
+                      <div className='date'>
+                        <p>Inicio da votação:</p>
+                        <input type='datetime-local' defaultValue={initialDate} disabled />
+                      </div>
+                      <div className='date'>
+                        <p>Fim da votação:</p>
+                        <input type='datetime-local' defaultValue={finalDate} disabled />
+                      </div>
                     </div>
-                    <p>Status: {status}</p>
-                    <button onClick={() => deleteVoting(voting.id)}>Deletar Votação</button>
+                    <div className='state-container'>
+                      <p className='status'>Status: <span className={status === 'Em andamento' ? 'on' : 'off'}>{status}</span></p>
+                      <button onClick={() => deleteVoting(voting.id)}>Deletar Votação</button>
+                    </div>
+                    <div className='voting-container-options'>
                     {voting.options.map((option) => {
                       const newVote = { votes: option.votes + 1 }; // body esperado no backend
                       return (
-                        <div key={option.id}>
+                        <div key={option.id} className='vote-card'>
                           <h4>{option.value}</h4>
-                          <p>{option.votes}</p>
+                          <p>Total de votos: {option.votes}</p>
                           <button
                             disabled={status !== 'Em andamento'}
                             onClick={() => vote(option.id, newVote)}
@@ -202,6 +210,7 @@ function App() {
                         </div>
                       )
                     })}
+                    </div>
                   </div>
                 )
               })

@@ -4,8 +4,8 @@
   align-items: center;
   gap: 1rem;
   width: 50vw;
-  margin: 1rem;
-  padding: 2rem;
+  margin: 1rem 0;
+  padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -20,8 +20,109 @@
 }
 
 .voting {
-  width: 90%;
+  width: 100%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9;
+}
+
+.voting > h3 {
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 0.5rem;
+  color: green;
+}
+
+.date-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0.6rem;
+  background-color: #f0f0f0;
+}
+
+.date {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.date > p {
+  font-weight: bold;
+}
+
+.date > input {
+  text-align: center;
+}
+
+.state-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ccc;
+}
+
+.state-container > button {
+  padding: 0.4rem;
+  border-radius: 5px;
+  background-color: red;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.status {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.on {
+  font-weight: bold;
+  color: green;
+}
+
+.off {
+  font-weight: bold;
+  color: red;
+}
+
+.voting-container-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.vote-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+}
+
+.vote-card > h4 {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.vote-card > p {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.vote-card > button {
+  padding: 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
