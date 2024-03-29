@@ -21,15 +21,15 @@ function App() {
   }
 
   const stateVoteing = (initialDate, finalDate) => {
-   const currentDate = new Date();
-   const formatedInitial = new Date(initialDate)
+    const currentDate = new Date();
+    const formatedInitial = new Date(initialDate)
     const formatedFinal = new Date(finalDate)
 
-   if (currentDate < formatedInitial) return 'Votação não iniciada';
+    if (currentDate < formatedInitial) return 'Votação não iniciada';
 
-   if (currentDate > formatedFinal) return 'Votação encerrada';
+    if (currentDate > formatedFinal) return 'Votação encerrada';
 
-   return 'Em andamento'
+    return 'Em andamento'
   }
 
   const vote = async (optionId, newVote) => {
@@ -43,6 +43,7 @@ function App() {
   }
 
   const createOptions = () => {
+    if (inputOptions === '') return alert('Campo de opção não pode ser vazio');
     setOptions((prev) => [...prev, { value: inputOptions }])
     setInputOptions('')
   }
@@ -99,72 +100,99 @@ function App() {
 
   return (
     <section>
-      <h1>Sistema de Votação</h1>
-      <form>
-        <h2>Criar Votação</h2>
-        <label htmlFor='title'>Título:</label>
-        <input type='text' id='title' placeholder='Qual seu animal favorito?' ref={title} />
-        <label htmlFor='initialDate'>Data de Início:</label>
-        <input type='datetime-local' id='initialDate' ref={initialDateCreate} />
-        <label htmlFor='finalDate'>Data de Fim:</label>
-        <input type='datetime-local' id='finalDate' ref={finalDateCreate}/>
-        <p>Opções para votar:</p>
-        <p>Coloque no minimo 3 opções</p>
-        <input type='text'
-        id='options'
-        placeholder='Cachorro'
-        name='inputOptions'
-        onChange={ (e) => setInputOptions(e.target.value)}
-        value={ inputOptions }
-        />
-        <button type='button' onClick={createOptions} >Adicionar</button>
-        {
-          options.map((option, index) => {
-            return (
-              <div key={index}>
-                <p>{option.value}</p>
-              </div>
-            )
-          })
-        }
-        <button type='button'
-        onClick={createVoting}>Criar Votação</button>
-      </form>
+      <header>
+        <h1>Sistema de Votação</h1>
+      </header>
+      <section className='container'>
+        <form className='form-container'>
+          <h2>Criar Votação</h2>
+          <div className='inputs-container'>
+            <label className='label-title' htmlFor='title'>Título:</label>
+            <input
+              className='input-forms'
+              type='text'
+              id='title'
+              placeholder='Ex: Qual seu animal favorito?'
+              ref={title} maxLength='155'
+            />
+            <label className='label-title' htmlFor='initialDate'>Data de Início:</label>
+            <input
+              className='input-forms'
+              type='datetime-local'
+              id='initialDate'
+              ref={initialDateCreate}
+            />
+            <label className='label-title' htmlFor='finalDate'>Data de Fim:</label>
+            <input
+              className='input-forms'
+              type='datetime-local'
+              id='finalDate'
+              ref={finalDateCreate}
+            />
+            <p className='label-title'>Adicionar opções para votar:</p>
+            <input
+              className='input-forms'
+              type='text'
+              id='options'
+              placeholder='Ex: Cachorro'
+              name='inputOptions'
+              maxLength='155'
+              onChange={(e) => setInputOptions(e.target.value)}
+              value={inputOptions}
+            />
+            <span className='warning'>Coloque no minimo 3 opções</span>
+            <button className='add-button' type='button' onClick={createOptions} >Adicionar</button>
+            {
+              options.map((option, index) => {
+                return (
+                  <div key={index}>
+                    <p>{option.value}</p>
+                  </div>
+                )
+              })
+            }
+          </div>
+          <button
+            className='button-create'
+            type='button'
+            onClick={createVoting}>Criar Votação</button>
+        </form>
 
-      <div>
-        <h2>Lista de Votações</h2>
-        {
-          votings.map((voting) => {
-            const initialDate = getDate(voting.initialDate)
-            const finalDate = getDate(voting.finalDate)
-            const status = stateVoteing(voting.initialDate, voting.finalDate);
-            return (
-              <div key={voting.id}>
-                <h3>{voting.title}</h3>
-                <p>Inicio da votação:</p>
-                <input type='datetime-local' defaultValue={ initialDate } disabled />
-                <p>Fim da votação:</p>
-                <input type='datetime-local' defaultValue={ finalDate } disabled />
-                <p>Status: {status}</p>
-                <button onClick={() => deleteVoting(voting.id)}>Deletar Votação</button>
-                {voting.options.map((option) => {
-                  const newVote =  { votes: option.votes + 1 }; // body esperado no backend
-                  return (
-                    <div key={option.id}>
-                      <h4>{option.value}</h4>
-                      <p>{option.votes}</p>
-                      <button
-                      disabled={ status !== 'Em andamento'}
-                      onClick={ () => vote(option.id, newVote) }
-                      >Votar</button>
-                    </div>
-                  )
-                })}
-              </div>
-            )
-          })
-        }
-      </div>
+        <div>
+          <h2>Lista de Votações</h2>
+          {
+            votings.map((voting) => {
+              const initialDate = getDate(voting.initialDate)
+              const finalDate = getDate(voting.finalDate)
+              const status = stateVoteing(voting.initialDate, voting.finalDate);
+              return (
+                <div key={voting.id}>
+                  <h3>{voting.title}</h3>
+                  <p>Inicio da votação:</p>
+                  <input type='datetime-local' defaultValue={initialDate} disabled />
+                  <p>Fim da votação:</p>
+                  <input type='datetime-local' defaultValue={finalDate} disabled />
+                  <p>Status: {status}</p>
+                  <button onClick={() => deleteVoting(voting.id)}>Deletar Votação</button>
+                  {voting.options.map((option) => {
+                    const newVote = { votes: option.votes + 1 }; // body esperado no backend
+                    return (
+                      <div key={option.id}>
+                        <h4>{option.value}</h4>
+                        <p>{option.votes}</p>
+                        <button
+                          disabled={status !== 'Em andamento'}
+                          onClick={() => vote(option.id, newVote)}
+                        >Votar</button>
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })
+          }
+        </div>
+      </section>
     </section>
   )
 }
