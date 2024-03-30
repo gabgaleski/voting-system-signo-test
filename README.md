@@ -23,6 +23,9 @@ Teste para a vaga de Desenvolvedor
 - Docker (Criar containers para isolar as aplicações)
 - EsLint (Manter a formatação e as boas praticas do codigo)
 
+## Modelo do Banco de Dados MySQL:
+ <img width="700" alt="Imagem modelo do banco de dados" src="./db-model.png">
+
 ## Para rodar o projeto:
 
 Para rodar siga os comandos em ordem:
