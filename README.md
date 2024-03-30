@@ -9,7 +9,6 @@ Teste para a vaga de Desenvolvedor
 - Express (Framework para node com requisições http)
 - Sequelize (ORM para conexao com o banco de dados MySQL)
 - MySQL (Banco de dados)
-- Mocha (testes)
 - Arquitetura MSC (Model, Service e Controller)
 
 ## Frontend
@@ -18,8 +17,6 @@ Teste para a vaga de Desenvolvedor
 - Axios (Realizar as requisições para o backend)
 - HTML
 - CSS
-- Jest
-- React Testing Library
 
 ## Outros
 
@@ -30,7 +27,14 @@ Teste para a vaga de Desenvolvedor
 
 Para rodar siga os comandos em ordem:
 
+Backend e Banco de dados no Docker:
+
 - `docker-compose up -d --build` Para criar os containers "Backend" e "db"
 - `docker exec -it backend bash` Para entrar no terminal do container de maneira iterativa
 - `npm run build` Para gerar o build em Javascript
 - `npm run db:start` Para rodar as migrations e seeds, criando as tabelas do banco de dados
+
+Frontend:
+
+- Entrar na pasta do frontend com `cd frontend`
+- `npm run dev` Para rodar o vite na: http://localhost:5173/
