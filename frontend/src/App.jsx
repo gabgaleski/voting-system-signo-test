@@ -16,7 +16,7 @@ function App() {
   const getVotings = async () => {
     try {
       const response = await requestData('/voting');
-      setVotings(response.data);
+      return setVotings(response.data);
     } catch (error) {
       return console.log(error);
     }

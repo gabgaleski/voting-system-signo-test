@@ -30,6 +30,8 @@ Teste para a vaga de Desenvolvedor
 
 Para rodar siga os comandos em ordem:
 
+- `npm install`
+
 Backend e Banco de dados no Docker:
 
 - `docker-compose up -d --build` Para criar os containers "Backend" e "db"
