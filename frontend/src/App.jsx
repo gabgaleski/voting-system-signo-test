@@ -63,7 +63,6 @@ function App() {
     const finalDateVoting = new Date(finalDateCreate.current.value);
     const currentDate = new Date();
     const isValidDate = initialDateVoting <= finalDateVoting && initialDateVoting >= currentDate;
-    console.log(isValidDate)
 
     if (title.current.value === '') return errorAlert('Título da votação não pode ser vazio');
     if (!isValidDate) return errorAlert('Data de inicio e fim da votação inválida')
@@ -76,13 +75,10 @@ function App() {
       options,
     }
 
-    try {
-      await requestPost('/voting', newVoting);
-      resetInputs();
-      return successAlert('Votação criada com sucesso');
-    } catch (error) {
-      return console.log(error)
-    }
+    await requestPost('/voting', newVoting);
+    resetInputs();
+    return successAlert('Votação criada com sucesso');
+
   }
 
   const deleteVoting = async (votingId) => {
